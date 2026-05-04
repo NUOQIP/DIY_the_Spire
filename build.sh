@@ -4,7 +4,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 SRC_DIR="$SCRIPT_DIR/src/main/java"
 RES_DIR="$SCRIPT_DIR/src/main/resources"
 BUILD_DIR="$SCRIPT_DIR/build"
-LIB_DIR="$SCRIPT_DIR/../lib"
+LIB_DIR="$SCRIPT_DIR/lib"
 
 MOD_ID="diy_the_spire"
 

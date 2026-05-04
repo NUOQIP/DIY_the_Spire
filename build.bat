@@ -5,7 +5,7 @@ set SCRIPT_DIR=%~dp0
 set SRC_DIR=%SCRIPT_DIR%src\main\java
 set RES_DIR=%SCRIPT_DIR%src\main\resources
 set BUILD_DIR=%SCRIPT_DIR%build
-set LIB_DIR=%SCRIPT_DIR%..\lib
+set LIB_DIR=%SCRIPT_DIR%lib
 set MOD_ID=diy_the_spire
 
 echo === Building DIY_the_spire ===
@@ -20,7 +20,10 @@ if exist "%LIB_DIR%" (
 )
 
 echo Compiling Java sources...
-dir /s /b "%SRC_DIR%\*.java" > sources.txt
+if exist sources.txt del sources.txt
+for /r "%SRC_DIR%" %%f in (*.java) do (
+    echo "%%f" >> sources.txt
+)
 javac -encoding UTF-8 -source 1.8 -target 1.8 -cp "%CLASSPATH%" -d "%BUILD_DIR%" @sources.txt
 
 if errorlevel 1 (
