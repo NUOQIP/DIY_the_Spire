@@ -1,0 +1,14 @@
+src/main/java/core/CardRegistry.java
+src/main/java/core/PackConfig.java
+src/main/java/core/PackManager.java
+src/main/java/core/TextureManager.java
+src/main/java/localization/LocalizationKeys.java
+src/main/java/modcore/ModInitialize.java
+src/main/java/patch/CardPortraitPatch.java
+src/main/java/patch/SingleCardViewPatch.java
+src/main/java/patch/SingleCardViewUIPatch.java
+src/main/java/processing/ImageProcessor.java
+src/main/java/processing/MaskManager.java
+src/main/java/ui/ImageCropDialog.java
+src/main/java/ui/PackEditorUI.java
+src/main/java/ui/UIUtils.java

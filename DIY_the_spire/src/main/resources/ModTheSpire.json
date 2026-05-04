@@ -1,0 +1,11 @@
+{
+  "modid": "diy_the_spire",
+  "name": "DIY the Spire",
+  "author_list": ["DIY"],
+  "description": "自定义卡图编辑器MOD，允许玩家在游戏内直接制作和管理卡图",
+  "version": "1.0.0",
+  "sts_version": "04-06-2026",
+  "mts_version": "3.23.2",
+  "dependencies": ["basemod"],
+  "update_json": ""
+}
