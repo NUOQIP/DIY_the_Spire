@@ -1,5 +1,8 @@
 package patch;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
@@ -15,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 public class SingleCardViewPatch {
     private static final Logger logger = LogManager.getLogger(SingleCardViewPatch.class.getName());
+    private static final Set<String> failedImages = new HashSet<>();
     
     private static Texture loadBigImageDirect(String cardId, boolean upgraded) {
         if (PackManager.getInstance().isEmpty()) return null;
@@ -28,12 +32,15 @@ public class SingleCardViewPatch {
                       info.getColorFolderName() + "/" + info.getTypeFolderName() + "/" +
                       info.getFileName() + suffix + ".png";
         
+        if (failedImages.contains(path)) return null;
+        
         FileHandle file = Gdx.files.local(path);
         if (file.exists()) {
             try {
                 return new Texture(file);
             } catch (Exception e) {
                 logger.warn("Failed to load big image for {} upgrade={}", cardId, upgraded, e);
+                failedImages.add(path);
             }
         }
         
