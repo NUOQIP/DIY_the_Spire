@@ -1,7 +1,7 @@
 package patch;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 import basemod.ReflectionHacks;
 import com.badlogic.gdx.Gdx;
@@ -18,7 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 public class SingleCardViewPatch {
     private static final Logger logger = LogManager.getLogger(SingleCardViewPatch.class.getName());
-    private static final Set<String> failedImages = new HashSet<>();
+    private static final Map<String, Long> lastAttemptTime = new HashMap<>();
+    private static final long RETRY_INTERVAL = 1000L;
     
     private static Texture loadBigImageDirect(String cardId, boolean upgraded) {
         if (PackManager.getInstance().isEmpty()) return null;
@@ -32,15 +33,19 @@ public class SingleCardViewPatch {
                       info.getColorFolderName() + "/" + info.getTypeFolderName() + "/" +
                       info.getFileName() + suffix + ".png";
         
-        if (failedImages.contains(path)) return null;
+        Long lastAttempt = lastAttemptTime.get(path);
+        long now = System.currentTimeMillis();
+        if (lastAttempt != null && now - lastAttempt < RETRY_INTERVAL) return null;
+        lastAttemptTime.put(path, now);
         
         FileHandle file = Gdx.files.local(path);
         if (file.exists()) {
             try {
-                return new Texture(file);
+                Texture texture = new Texture(file);
+                lastAttemptTime.remove(path);
+                return texture;
             } catch (Exception e) {
                 logger.warn("Failed to load big image for {} upgrade={}", cardId, upgraded, e);
-                failedImages.add(path);
             }
         }
         
